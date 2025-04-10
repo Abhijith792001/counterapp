@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../controller/controller.dart';
 
 class CounterScreen extends StatelessWidget {
-  const CounterScreen({super.key});
-
+   CounterScreen({super.key});
+  final controller = Get.put(CounterController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,20 +25,29 @@ class CounterScreen extends StatelessWidget {
             children: [
                 Text('Click here to view the count '),
           
-                Text('1' ,style: TextStyle(
-                  fontSize: 25
-                ),),
+                Obx(()=> Text('${controller.count}' ,style: TextStyle(
+                    fontSize: 25
+                  ),),
+                ),
                 
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton.icon(onPressed: (){}, label: Text('Minus')),
+                    ElevatedButton.icon(onPressed: (){
+                      controller.dcrement();
+                    }, label: Text('Minus'),
+                    icon: Icon(Icons.remove),
+                    ),
                     SizedBox(width: 10,),
-                    ElevatedButton.icon(onPressed: (){}, label: Text('Add') ,icon: Icon(Icons.add),),
+                    ElevatedButton.icon(onPressed: (){
+                      controller.increment();
+                    }, label: Text('Add') ,icon: Icon(Icons.add),),
                   ],
                 ),
-                ElevatedButton.icon(onPressed: (){}, label: Text('Clear'),icon: Icon(Icons.delete),),
+                ElevatedButton.icon(onPressed: (){
+                  controller.reset();
+                }, label: Text('Clear'),icon: Icon(Icons.delete),),
             ],
           ),
         ),
